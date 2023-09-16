@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h2>User info:</h2>
+    <p id="info"></p>
+        <p>Name: <input name="name" id="name" /></p>
+        <p>Age: <input name="age" id="age" type="number" /></p>
+        <!--
+        <br />
+        <p>Lang: <input name="lang" /></p>
+        <p>Lang: <input name="lang" /></p>
+        <p>Lang: <input name="lang" /></p>
+        -->
+        <button id="btn">Send</button>
+
+    <script>
+        document.getElementById("btn").addEventListener("click", send);
+
+        async function send()
+        {
+            const response = await fetch("/user", {
+                method: "POST",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    name: document.getElementById("name").value,
+                    age: document.getElementById("age").value
+                })
+            });
+            const message = await response.json();
+            document.getElementById("info").innerText = message.text;
+        };
+    </script>
+</body>
+</html>
